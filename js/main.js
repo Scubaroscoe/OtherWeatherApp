@@ -1,6 +1,5 @@
 const button = document.querySelector('button');
 const form = document.querySelector('form');
-// const searchDiv = document.querySelector('#search-div');
 
 async function fetchData() {
   let location, tempUnit;
@@ -21,10 +20,7 @@ async function fetchData() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    // const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${api_key}&s=${subject}`, { mode: 'cors' });
-    // console.log(`response: ${response}`);
     const data = await response.json();
-    // console.log(`data: ${data}`);
     mainweather = harvestData(data, tempUnit);
     console.log(`mainweather is: ${mainweather}`);
   } catch(error) {
@@ -98,9 +94,7 @@ function harvestData(data, units) {
   const sunsetTime = data.sys.sunset; // 163417667
   const timezone = data.timezone; // shift in seconds from utc.
   const windSpeed = data.wind.speed; // default m/s, metric meter/sec, imperial miles/hour
-  const windDir = data.wind.deg; // degrees (meteorological)
-
-  
+  const windDir = data.wind.deg; // degrees (meteorological)  
 
   const loch2 = document.createElement('h2');
   loch2.textContent = 'Location: ' + loc;
@@ -133,12 +127,9 @@ function harvestData(data, units) {
 
 
 async function fetchGif(mainweather) {
-  const weatherDiv = document.querySelector('#weather-div')
-  // console.log(mainP.textContent);
+  const weatherDiv = document.querySelector('#weather-div');
 
-  let subject = await mainweather.then(function (result) {
-    return result;
-  });
+  let subject = await mainweather;  // await used here to unwrap the promise
   const api_key = 'igAuI2gTFros5rTskOx6qqEEWGc5eGPV';
   const img = document.createElement('img');
   try {
@@ -150,14 +141,13 @@ async function fetchGif(mainweather) {
   } catch(err) {		
     img.src = '../error.gif';
   }
-  // weatherDiv.prependChild(img);
+
   weatherDiv.prepend(img);
 }
-// button.addEventListener('click', fetchData);
+
 form.addEventListener('submit', function (event) {
   event.preventDefault(); // This is absolutely necessary. Form's apparently can't really handle asynchronous requests
   // for this reason you need to use the above before using an asynchronous function
   let mainweather = fetchData();
   fetchGif(mainweather);
 });
-  // fetchData);
