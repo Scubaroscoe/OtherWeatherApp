@@ -1,5 +1,6 @@
 body {
   width: 100%;
+  background: lightgreen;
 }
 
 div {
@@ -10,4 +11,27 @@ div {
 h1 {
   text-align: center;
   font-size: larger;
+}
+
+img {
+  display: block;
+  margin: auto;
+}
+
+form {
+  display: flex;
+  margin: 3px;
+  justify-content: center;
+}
+
+form p {
+  padding-top: 5px;
+}
+
+label {
+  padding-top: 3px;
+}
+
+button {
+  margin: 3px;
 }
